@@ -5,5 +5,8 @@
     <color name="colorAccent">#D81B60</color>
     <color name="colorP1">#FF0000</color>
     <color name="colorP2">#0000FF</color>
-    <color name="blank">#494949</color>
+    <color name="blank">#999999</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
 </resources>
