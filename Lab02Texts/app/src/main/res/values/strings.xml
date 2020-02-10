@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Tic Tac Toe</string>
+    <string name="player">X\'s Turn</string>
+    <string name="reset">RESET</string>
+    <string name="name_hint">Enter your name: </string>
+    <string name="submit">SUBMIT</string>
+    <string name="cycle">CYCLE</string>
+    <string name="names">asdf</string>
+</resources>
