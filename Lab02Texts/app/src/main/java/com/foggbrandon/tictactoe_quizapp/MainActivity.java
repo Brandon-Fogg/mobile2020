@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import android.os.Bundle;
@@ -26,6 +27,9 @@ public class MainActivity extends AppCompatActivity {
     Button submitB;
     EditText responseText;
     TextView nameField;
+    String[] words;
+    Button cycleB;
+    int index = -1;
 
 
     @Override
@@ -47,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
         submitB = findViewById(R.id.submitB);
         responseText = findViewById(R.id.responseText);
         nameField = findViewById(R.id.nameField);
+        words = getResources().getStringArray(R.array.words);
+        cycleB = findViewById(R.id.cycleB);
 
         midB.setBackgroundColor(0x10909090);
         topB.setBackgroundColor(0x10909090);
@@ -263,6 +269,27 @@ public class MainActivity extends AppCompatActivity {
                         text.setTextColor(0xFFFF0000);
                     }
                 }
+            }
+        });
+
+        submitB.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Log.i("button", "Name " + responseText.getText().toString());
+                nameField.setText(responseText.getText());
+                responseText.setText("");
+            }
+        });
+
+        cycleB.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                index += 1;
+                if(index == words.length){
+                    index = 0;
+                }
+                Log.i("button", "Cycle " + words[index]);
+                nameField.setText(words[index]);
             }
         });
 

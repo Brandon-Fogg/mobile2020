@@ -5,5 +5,11 @@
     <string name="name_hint">Enter your name: </string>
     <string name="submit">SUBMIT</string>
     <string name="cycle">CYCLE</string>
-    <string name="names">asdf</string>
+    <string name="names"></string>
+    <string-array name="words">
+        <item>Word1</item>
+        <item>Word2</item>
+        <item>Word3</item>
+        <item>Last Word</item>
+    </string-array>
 </resources>
