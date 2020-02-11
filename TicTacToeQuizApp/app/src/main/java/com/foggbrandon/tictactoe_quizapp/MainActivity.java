@@ -25,6 +25,51 @@ public class MainActivity extends AppCompatActivity {
     String player;
 
 
+    public String isWinner(){
+        String[] state = {toplB.getText().toString(),topB.getText().toString(),toprB.getText().toString(),lB.getText().toString(), midB.getText().toString(),rB.getText().toString(),botlB.getText().toString(),botB.getText().toString(),botrB.getText().toString()};
+        String topRow = state[0]+state[1]+state[2];
+        String midRow = state[3]+state[4]+state[5];
+        String botRow = state[6]+state[7]+state[8];
+        String lVert = state[0]+state[3]+state[6];
+        String midVert = state[1]+state[4]+state[7];
+        String topVert = state[2]+state[5]+state[8];
+        String diag1 = state[0]+state[4]+state[8];
+        String diag2 = state[2]+state[4]+state[6];
+        if(topRow.equals("OOO")||midRow.equals("OOO")||botRow.equals("OOO")||lVert.equals("OOO")||topVert.equals("OOO")||midVert.equals("OOO")||diag1.equals("OOO")||diag2.equals("OOO")){
+            return "O Wins!";
+        }
+        if(topRow.equals("XXX")||midRow.equals("XXX")||botRow.equals("XXX")||lVert.equals("XXX")||topVert.equals("XXX")||midVert.equals("XXX")||diag1.equals("XXX")||diag2.equals("XXX")){
+            return "X Wins!";
+        }
+        if(topRow.length()+midRow.length()+botRow.length()==9){
+            return "Tie Game!";
+        }
+        return "";
+    }
+
+    public void endGame(String winner){
+        Log.i("button", winner);
+        text.setText(winner);
+        if(winner.charAt(0)=='X'){
+            text.setTextColor(0xFFFF0000);
+        }
+        else if(winner.charAt(0)=='O'){
+            text.setTextColor(0xFF0000FF);
+        }
+        else{
+            text.setTextColor(0xFF000000);
+        }
+        toplB.setClickable(false);
+        topB.setClickable(false);
+        toprB.setClickable(false);
+        lB.setClickable(false);
+        midB.setClickable(false);
+        rB.setClickable(false);
+        botrB.setClickable(false);
+        botB.setClickable(false);
+        botlB.setClickable(false);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,11 +97,11 @@ public class MainActivity extends AppCompatActivity {
         botrB.setBackgroundColor(0x10909090);
         botlB.setBackgroundColor(0x10909090);
 
-        midB.setOnClickListener(new View.OnClickListener(){
+        midB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.i("button", player + " pressed middle button");
-                if(!midB.getText().equals("X") && !midB.getText().equals("O")) {
+                if (!midB.getText().equals("X") && !midB.getText().equals("O")) {
                     midB.setText(player);
                     if (player.equals("X")) {
                         midB.setTextColor(0xFFFF0000);
@@ -71,9 +116,14 @@ public class MainActivity extends AppCompatActivity {
                         text.setText("X's Turn");
                         text.setTextColor(0xFFFF0000);
                     }
+                    String win = isWinner();
+                    if(!win.equals("")){
+                        endGame(win);
+                    }
                 }
             }
         });
+
 
         topB.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -93,6 +143,10 @@ public class MainActivity extends AppCompatActivity {
                         player = "X";
                         text.setText("X's Turn");
                         text.setTextColor(0xFFFF0000);
+                    }
+                    String win = isWinner();
+                    if(!win.equals("")){
+                        endGame(win);
                     }
                 }
             }
@@ -117,6 +171,10 @@ public class MainActivity extends AppCompatActivity {
                         text.setText("X's Turn");
                         text.setTextColor(0xFFFF0000);
                     }
+                    String win = isWinner();
+                    if(!win.equals("")){
+                        endGame(win);
+                    }
                 }
             }
         });
@@ -139,6 +197,10 @@ public class MainActivity extends AppCompatActivity {
                         player = "X";
                         text.setText("X's Turn");
                         text.setTextColor(0xFFFF0000);
+                    }
+                    String win = isWinner();
+                    if(!win.equals("")){
+                        endGame(win);
                     }
                 }
             }
@@ -164,6 +226,10 @@ public class MainActivity extends AppCompatActivity {
                         text.setText("X's Turn");
                         text.setTextColor(0xFFFF0000);
                     }
+                    String win = isWinner();
+                    if(!win.equals("")){
+                        endGame(win);
+                    }
                 }
             }
         });
@@ -186,6 +252,10 @@ public class MainActivity extends AppCompatActivity {
                         player = "X";
                         text.setText("X's Turn");
                         text.setTextColor(0xFFFF0000);
+                    }
+                    String win = isWinner();
+                    if(!win.equals("")){
+                        endGame(win);
                     }
                 }
             }
@@ -210,6 +280,10 @@ public class MainActivity extends AppCompatActivity {
                         text.setText("X's Turn");
                         text.setTextColor(0xFFFF0000);
                     }
+                    String win = isWinner();
+                    if(!win.equals("")){
+                        endGame(win);
+                    }
                 }
             }
         });
@@ -233,6 +307,10 @@ public class MainActivity extends AppCompatActivity {
                         text.setText("X's Turn");
                         text.setTextColor(0xFFFF0000);
                     }
+                    String win = isWinner();
+                    if(!win.equals("")){
+                        endGame(win);
+                    }
                 }
             }
         });
@@ -255,6 +333,10 @@ public class MainActivity extends AppCompatActivity {
                         player = "X";
                         text.setText("X's Turn");
                         text.setTextColor(0xFFFF0000);
+                    }
+                    String win = isWinner();
+                    if(!win.equals("")){
+                        endGame(win);
                     }
                 }
             }
@@ -285,6 +367,15 @@ public class MainActivity extends AppCompatActivity {
                 text.setText("X's Turn");
                 text.setTextColor(0xFFFF0000);
                 player = "X";
+                toplB.setClickable(true);
+                topB.setClickable(true);
+                toprB.setClickable(true);
+                lB.setClickable(true);
+                midB.setClickable(true);
+                rB.setClickable(true);
+                botrB.setClickable(true);
+                botB.setClickable(true);
+                botlB.setClickable(true);
             }
         });
     }
