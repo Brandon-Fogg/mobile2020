@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Lab03</string>
+    <string name="view1text">View1</string>
+    <string name="view2text">View2</string>
+    <string name="view3text">View3</string>
+    <string name="view4text">View4</string>
+</resources>
