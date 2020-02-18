@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <View
+        android:id="@+id/view1"
+        android:tag="view1"
+        android:layout_width="30pt"
+        android:layout_height="30pt"
+        android:background="@color/colorAccent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/vert"
+        app:layout_constraintGuide_percent=".50"
+        android:orientation="vertical"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/horiz"
+        app:layout_constraintGuide_percent=".50"
+        android:orientation="horizontal"/>
+
+    <View
+        android:id="@+id/view2"
+        android:tag="view2"
+        android:layout_width="20pt"
+        android:layout_height="20pt"
+        android:background="@color/colorAccent"
+        app:layout_constraintRight_toLeftOf="@id/vert"
+        app:layout_constraintBottom_toTopOf="@id/horiz" />
+
+    <View
+        android:id="@+id/view3"
+        android:tag="view3"
+        android:layout_width="20pt"
+        android:layout_height="20pt"
+        android:background="@color/colorAccent"
+        app:layout_constraintLeft_toRightOf="@id/vert"
+        app:layout_constraintTop_toBottomOf="@id/horiz" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
