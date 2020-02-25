@@ -79,6 +79,6 @@ class Lifecycle {
     
     @NonNull
     public String toString() {
-        return "Create: " + onCreateCount+ "\nStart: " + onStartCount + "\nResume: " + onRestartCount + "\nPause: " + onPauseCount + "\nStop: " + onStopCount + "\nRestart: " + onRestartCount + "\nDestroy: " + onDestroyCount;
+        return "Create: " + onCreateCount+ "\nStart: " + onStartCount + "\nResume: " + onResumeCount + "\nPause: " + onPauseCount + "\nStop: " + onStopCount + "\nRestart: " + onRestartCount + "\nDestroy: " + onDestroyCount;
     }
 }
