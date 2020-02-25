@@ -2,4 +2,7 @@
     <string name="app_name">Tic Tac Toe</string>
     <string name="player">X\'s Turn</string>
     <string name="reset">RESET</string>
+    <string name="single_player_mode">Single Player Mode</string>
+    <string name="multi_player_mode">Multi Player Mode</string>
+    <string name="back">BACK</string>
 </resources>

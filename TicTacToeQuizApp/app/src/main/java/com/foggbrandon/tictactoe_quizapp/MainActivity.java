@@ -12,6 +12,9 @@ import android.os.Bundle;
 public class MainActivity extends AppCompatActivity {
 
     TextView text;
+    Button singlePlayer;
+    Button multiPlayer;
+    Button backB;
     Button midB;
     Button topB;
     Button toplB;
@@ -70,12 +73,15 @@ public class MainActivity extends AppCompatActivity {
         botlB.setClickable(false);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void startSinglePlayerGame() {
+
+    }
+
+    public void startMultiPlayerGame() {
         setContentView(R.layout.activity_main);
         player = "X";
         text = findViewById(R.id.text);
+        backB = findViewById(R.id.backB);
         midB = findViewById(R.id.midB);
         topB = findViewById(R.id.topB);
         toplB = findViewById(R.id.toplB);
@@ -378,5 +384,41 @@ public class MainActivity extends AppCompatActivity {
                 botlB.setClickable(true);
             }
         });
+
+        backB.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Log.i("button", "Pressed back button");
+                startScreen();
+            }
+        });
+    }
+
+    public void startScreen() {
+        setContentView(R.layout.start_screen);
+        singlePlayer = findViewById(R.id.singlePlayer);
+        multiPlayer = findViewById(R.id.multiPlayer);
+
+        singlePlayer.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Log.i("button", "Single player mode.");
+                startSinglePlayerGame();
+            }
+        });
+
+        multiPlayer.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Log.i("button", "Multi player mode.");
+                startMultiPlayerGame();
+            }
+        });
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        startScreen();
     }
 }
