@@ -66,4 +66,58 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    protected void onStart() {
+        super.onStart();
+        set1.setOnStartCount(set1.getOnStartCount()+1);
+        set2.setOnStartCount(set2.getOnStartCount()+1);
+
+        updateScreen();
+        updateSharedPrefs();
+    }
+
+    protected void onResume() {
+        super.onResume();
+        set1.setOnResumeCount(set1.getOnResumeCount()+1);
+        set2.setOnResumeCount(set2.getOnResumeCount()+1);
+
+        updateScreen();
+        updateSharedPrefs();
+    }
+
+    protected void onPause() {
+        super.onPause();
+        set1.setOnPauseCount(set1.getOnPauseCount()+1);
+        set2.setOnPauseCount(set2.getOnPauseCount()+1);
+
+        updateScreen();
+        updateSharedPrefs();
+    }
+
+    protected void onStop() {
+        super.onStop();
+        set1.setOnStopCount(set1.getOnStopCount()+1);
+        set2.setOnStopCount(set2.getOnStopCount()+1);
+
+        updateScreen();
+        updateSharedPrefs();
+    }
+
+    protected void onRestart() {
+        super.onRestart();
+        set1.setOnRestartCount(set1.getOnRestartCount()+1);
+        set2.setOnRestartCount(set2.getOnRestartCount()+1);
+
+        updateScreen();
+        updateSharedPrefs();
+    }
+
+    protected void onDestroy() {
+        super.onDestroy();
+        set1.setOnDestroyCount(set1.getOnDestroyCount()+1);
+        set2.setOnDestroyCount(set2.getOnDestroyCount()+1);
+
+        updateScreen();
+        updateSharedPrefs();
+    }
 }
