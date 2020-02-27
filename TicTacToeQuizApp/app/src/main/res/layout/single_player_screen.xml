@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horiz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent=".2" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vert_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".4" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vert_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".6" />
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20pt"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/horiz"
+        />
+
+    <Button
+        android:id="@+id/chooseX"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/choose_x"
+        android:textColor="@color/colorP1"
+        app:layout_constraintBottom_toTopOf="@id/horiz"
+        app:layout_constraintRight_toLeftOf="@id/vert_left" />
+
+    <Button
+        android:id="@+id/chooseO"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/choose_o"
+        android:textColor="@color/colorP2"
+        app:layout_constraintBottom_toTopOf="@id/horiz"
+        app:layout_constraintLeft_toRightOf="@id/vert_right" />
+
+    <Button
+        android:id="@+id/midB"
+        android:layout_width="40pt"
+        android:layout_height="40pt"
+        android:textAllCaps="true"
+        android:textSize="20pt"
+        style="?android:attr/borderlessButtonStyle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <Button
+        android:id="@+id/topB"
+        android:layout_width="40pt"
+        android:layout_height="40pt"
+        android:textColor="@color/blank"
+        android:textAllCaps="true"
+        android:textSize="20pt"
+        style="?android:attr/borderlessButtonStyle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/midB"
+        />
+
+    <Button
+        android:id="@+id/botB"
+        android:layout_width="40pt"
+        android:layout_height="40pt"
+        android:textColor="@color/blank"
+        android:textAllCaps="true"
+        android:textSize="20pt"
+        style="?android:attr/borderlessButtonStyle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/midB"
+        />
+
+    <Button
+        android:id="@+id/lB"
+        android:layout_width="40pt"
+        android:layout_height="40pt"
+        android:textColor="@color/blank"
+        android:textAllCaps="true"
+        android:textSize="20pt"
+        style="?android:attr/borderlessButtonStyle"
+        app:layout_constraintRight_toLeftOf="@id/midB"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <Button
+        android:id="@+id/rB"
+        android:layout_width="40pt"
+        android:layout_height="40pt"
+        android:textColor="@color/blank"
+        android:textAllCaps="true"
+        android:textSize="20pt"
+        style="?android:attr/borderlessButtonStyle"
+        app:layout_constraintLeft_toRightOf="@id/midB"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <Button
+        android:id="@+id/toplB"
+        android:layout_width="40pt"
+        android:layout_height="40pt"
+        android:textColor="@color/blank"
+        android:textAllCaps="true"
+        android:textSize="20pt"
+        style="?android:attr/borderlessButtonStyle"
+        app:layout_constraintRight_toLeftOf="@id/topB"
+        app:layout_constraintBottom_toTopOf="@id/lB"
+        />
+
+    <Button
+        android:id="@+id/toprB"
+        android:layout_width="40pt"
+        android:layout_height="40pt"
+        android:textColor="@color/blank"
+        android:textAllCaps="true"
+        android:textSize="20pt"
+        style="?android:attr/borderlessButtonStyle"
+        app:layout_constraintLeft_toRightOf="@id/topB"
+        app:layout_constraintBottom_toTopOf="@id/rB"
+        />
+
+    <Button
+        android:id="@+id/botlB"
+        android:layout_width="40pt"
+        android:layout_height="40pt"
+        android:textColor="@color/blank"
+        android:textAllCaps="true"
+        android:textSize="20pt"
+        style="?android:attr/borderlessButtonStyle"
+        app:layout_constraintRight_toLeftOf="@id/botB"
+        app:layout_constraintTop_toBottomOf="@id/lB"
+        />
+
+    <Button
+        android:id="@+id/botrB"
+        android:layout_width="40pt"
+        android:layout_height="40pt"
+        android:textColor="@color/blank"
+        android:textAllCaps="true"
+        android:textSize="20pt"
+        style="?android:attr/borderlessButtonStyle"
+        app:layout_constraintLeft_toRightOf="@id/botB"
+        app:layout_constraintTop_toBottomOf="@id/rB"
+        />
+
+    <Button
+        android:id="@+id/resetB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="true"
+        android:text="@string/reset"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/botB"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <Button
+        android:id="@+id/backB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="true"
+        android:text="@string/back"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <View
+        android:layout_width="1pt"
+        android:layout_height="120pt"
+        android:background="@color/black"
+        app:layout_constraintLeft_toRightOf="@id/toplB"
+        app:layout_constraintRight_toLeftOf="@id/topB"
+        app:layout_constraintTop_toTopOf="@id/topB"
+        />
+
+    <View
+        android:layout_width="1pt"
+        android:layout_height="120pt"
+        android:background="@color/black"
+        app:layout_constraintLeft_toRightOf="@id/topB"
+        app:layout_constraintRight_toLeftOf="@id/toprB"
+        app:layout_constraintTop_toTopOf="@id/topB"
+        />
+
+    <View
+        android:layout_width="120pt"
+        android:layout_height="1pt"
+        android:background="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/toplB"
+        app:layout_constraintBottom_toTopOf="@id/lB"
+        app:layout_constraintLeft_toLeftOf="@id/lB"
+        />
+
+    <View
+        android:layout_width="120pt"
+        android:layout_height="1pt"
+        android:background="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/lB"
+        app:layout_constraintBottom_toTopOf="@id/botlB"
+        app:layout_constraintLeft_toLeftOf="@id/lB"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

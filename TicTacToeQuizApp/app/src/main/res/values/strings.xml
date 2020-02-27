@@ -5,4 +5,6 @@
     <string name="single_player_mode">Single Player Mode</string>
     <string name="multi_player_mode">Multi Player Mode</string>
     <string name="back">BACK</string>
+    <string name="choose_x">Play as X</string>
+    <string name="choose_o">Play as O</string>
 </resources>
