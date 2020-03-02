@@ -30,6 +30,68 @@ public class MainActivity extends AppCompatActivity {
     String player;
 
 
+    public String getState() {
+        String to_ret = "";
+        if(toplB.getText().toString().equals(""))
+            to_ret += ".";
+        else
+            to_ret += toplB.getText().toString();
+        if(topB.getText().toString().equals(""))
+            to_ret += ".";
+        else
+            to_ret += topB.getText().toString();
+        if(toprB.getText().toString().equals(""))
+            to_ret += ".";
+        else
+            to_ret += toprB.getText().toString();
+        if(lB.getText().toString().equals(""))
+            to_ret += ".";
+        else
+            to_ret += lB.getText().toString();
+        if(midB.getText().toString().equals(""))
+            to_ret += ".";
+        else
+            to_ret += midB.getText().toString();
+        if(rB.getText().toString().equals(""))
+            to_ret += ".";
+        else
+            to_ret += rB.getText().toString();
+        if(botlB.getText().toString().equals(""))
+            to_ret += ".";
+        else
+            to_ret += botlB.getText().toString();
+        if(botB.getText().toString().equals(""))
+            to_ret += ".";
+        else
+            to_ret += botB.getText().toString();
+        if(botrB.getText().toString().equals(""))
+            to_ret += ".";
+        else
+            to_ret += botrB.getText().toString();
+        return to_ret;
+    }
+
+    public String isWinner_string(String state) {
+        String topRow = state.substring(0, 3);
+        String midRow = state.substring(3, 6);
+        String botRow = state.substring(6);
+        String lVert = state.substring(0, 1) + state.substring(3, 4) + state.substring(6, 7);
+        String midVert = state.substring(1, 2) + state.substring(4, 5) + state.substring(7, 8);
+        String topVert = state.substring(2, 3) + state.substring(5, 6) + state.substring(8);
+        String diag1 = state.substring(0, 1) + state.substring(4, 5) + state.substring(8);
+        String diag2 = state.substring(2, 3) + state.substring(4, 5) + state.substring(6, 7);
+        if(topRow.equals("OOO")||midRow.equals("OOO")||botRow.equals("OOO")||lVert.equals("OOO")||topVert.equals("OOO")||midVert.equals("OOO")||diag1.equals("OOO")||diag2.equals("OOO")){
+            return "O Wins!";
+        }
+        if(topRow.equals("XXX")||midRow.equals("XXX")||botRow.equals("XXX")||lVert.equals("XXX")||topVert.equals("XXX")||midVert.equals("XXX")||diag1.equals("XXX")||diag2.equals("XXX")){
+            return "X Wins!";
+        }
+        if(topRow.length()+midRow.length()+botRow.length()==9){
+            return "Tie Game!";
+        }
+        return "";
+    }
+
     public String isWinner(){
         String[] state = {toplB.getText().toString(),topB.getText().toString(),toprB.getText().toString(),lB.getText().toString(), midB.getText().toString(),rB.getText().toString(),botlB.getText().toString(),botB.getText().toString(),botrB.getText().toString()};
         String topRow = state[0]+state[1]+state[2];
@@ -75,13 +137,124 @@ public class MainActivity extends AppCompatActivity {
         botlB.setClickable(false);
     }
 
+    public int max(String state) {
+        String win = isWinner_string(state);
+        Log.i("button", "max" + state + state.length());
+        if(win.equals("X Wins!"))
+            return 2;
+        else if(win.equals("Tie Game!"))
+            return 1;
+        else if(win.equals("O Wins!"))
+            return 0;
+        Log.i("button", "here2");
+        int max=0;
+        for(int i=0;i<9;i++) {
+            if(state.substring(i,i+1).equals(".")) {
+                Log.i("button", ""+i);
+                int t_max;
+                if(i==0)
+                    t_max = min("X"+state.substring(1));
+                else if(i==8)
+                    t_max = min(state.substring(0,i)+"X");
+                else
+                    t_max = min(state.substring(0,i)+"X"+state.substring(i+1));
+                if(t_max == 2)
+                    return 2;
+                else if(t_max == 1 && max == 0)
+                    max = 1;
+            }
+        }
+        Log.i("button", "here3");
+        return max;
+    }
+
+    public int min(String state) {
+        Log.i("button", "min" + state + state.length());
+        String win = isWinner_string(state);
+        if(win.equals("X Wins!"))
+            return 2;
+        else if(win.equals("Tie Game!"))
+            return 1;
+        else if(win.equals("O Wins!"))
+            return 0;
+        int min=2;
+        Log.i("button", "heree");
+        for(int i=0;i<9;i++) {
+            if(state.substring(i,i+1).equals(".")) {
+                int t_min;
+                if(i==0)
+                    t_min = max("O"+state.substring(1));
+                else if(i==8)
+                    t_min = max(state.substring(0,i)+"O");
+                else
+                    t_min = max(state.substring(0,i)+"O"+state.substring(i+1));
+                if(t_min == 0)
+                    return 0;
+                else if(t_min == 1 && min == 2)
+                    min = 1;
+            }
+        }
+        return min;
+    }
+
     public void AI_take_turn(String other_player) {
-        String AI_player = "";
+        String state = getState();
+        Button[] buttons = {toplB,topB,toprB,lB,midB,rB,botlB,botB,botrB};
+        Log.i("button", state + state.length());
         if(other_player.equals("X")) {
-            AI_player = "O";
+            int min = 2;
+            int idx = -1;
+            for(int i=0;i<9;i++) {
+                if(state.substring(i,i+1).equals(".")) {
+                    Log.i("button", "" + i);
+                    int t_min;
+                    if(i==0)
+                        t_min = max("O"+state.substring(1));
+                    else if(i==8)
+                        t_min = max(state.substring(0,i)+"O");
+                    else
+                        t_min = max(state.substring(0,i)+"O"+state.substring(i+1));
+                    if(t_min == 0) {
+                        min = 0;
+                        idx = i;
+                    }
+                    else if(t_min == 1 && min == 2) {
+                        min = 1;
+                        idx = i;
+                    }
+                }
+            }
+            Log.i("button", "Here2");
+            buttons[idx].setTextColor(0xFF0000FF);
+            buttons[idx].setBackgroundColor(0x200000FF);
+            buttons[idx].setText("O");
+            Log.i("button", "Here3");
         }
         else {
-            AI_player = "X";
+            int max = 0;
+            int idx = -1;
+            for(int i=0;i<9;i++) {
+                if(state.substring(i,i+1).equals(".")) {
+                    int t_max;
+                    if(i==0)
+                        t_max = min("X"+state.substring(1));
+                    else if(i==8)
+                        t_max = min(state.substring(0,i)+"X");
+                    else
+                        t_max = min(state.substring(0,i)+"X"+state.substring(i+1));
+                    if(t_max == 2) {
+                        max = 2;
+                        idx = i;
+                    }
+                    else if(t_max == 1 && max == 0) {
+                        max = 1;
+                        idx = i;
+                    }
+                }
+            }
+            buttons[idx].setTextColor(0xFFFF0000);
+            buttons[idx].setBackgroundColor(0x20FF0000);
+            buttons[idx].setText("X");
         }
     }
 
@@ -123,15 +296,18 @@ public class MainActivity extends AppCompatActivity {
                     if (player.equals("X")) {
                         midB.setTextColor(0xFFFF0000);
                         midB.setBackgroundColor(0x20FF0000);
-                        AI_take_turn(player);
                     } else {
                         midB.setTextColor(0xFF0000FF);
                         midB.setBackgroundColor(0x200000FF);
-                        AI_take_turn(player);
                     }
                     String win = isWinner();
-                    if(!win.equals("")){
+                    if(!win.equals(""))
                         endGame(win);
+                    else {
+                        AI_take_turn(player);
+                        win = isWinner();
+                        if (!win.equals(""))
+                            endGame(win);
                     }
                 }
             }
@@ -146,15 +322,18 @@ public class MainActivity extends AppCompatActivity {
                     if (player.equals("X")) {
                         topB.setTextColor(0xFFFF0000);
                         topB.setBackgroundColor(0x20FF0000);
-                        AI_take_turn(player);
                     } else {
                         topB.setTextColor(0xFF0000FF);
                         topB.setBackgroundColor(0x200000FF);
-                        AI_take_turn(player);
                     }
                     String win = isWinner();
-                    if(!win.equals("")){
+                    if(!win.equals(""))
                         endGame(win);
+                    else {
+                        AI_take_turn(player);
+                        win = isWinner();
+                        if (!win.equals(""))
+                            endGame(win);
                     }
                 }
             }
@@ -169,15 +348,18 @@ public class MainActivity extends AppCompatActivity {
                     if (player.equals("X")) {
                         botB.setTextColor(0xFFFF0000);
                         botB.setBackgroundColor(0x20FF0000);
-                        AI_take_turn(player);
                     } else {
                         botB.setTextColor(0xFF0000FF);
                         botB.setBackgroundColor(0x200000FF);
-                        AI_take_turn(player);
                     }
                     String win = isWinner();
-                    if(!win.equals("")){
+                    if(!win.equals(""))
                         endGame(win);
+                    else {
+                        AI_take_turn(player);
+                        win = isWinner();
+                        if (!win.equals(""))
+                            endGame(win);
                     }
                 }
             }
@@ -192,15 +374,18 @@ public class MainActivity extends AppCompatActivity {
                     if (player.equals("X")) {
                         lB.setTextColor(0xFFFF0000);
                         lB.setBackgroundColor(0x20FF0000);
-                        AI_take_turn(player);
                     } else {
                         lB.setTextColor(0xFF0000FF);
                         lB.setBackgroundColor(0x200000FF);
-                        AI_take_turn(player);
                     }
                     String win = isWinner();
-                    if(!win.equals("")){
+                    if(!win.equals(""))
                         endGame(win);
+                    else {
+                        AI_take_turn(player);
+                        win = isWinner();
+                        if (!win.equals(""))
+                            endGame(win);
                     }
                 }
             }
@@ -215,16 +400,19 @@ public class MainActivity extends AppCompatActivity {
                     if(player.equals("X")) {
                         rB.setTextColor(0xFFFF0000);
                         rB.setBackgroundColor(0x20FF0000);
-                        AI_take_turn(player);
                     }
                     else {
                         rB.setTextColor(0xFF0000FF);
                         rB.setBackgroundColor(0x200000FF);
-                        AI_take_turn(player);
                     }
                     String win = isWinner();
-                    if(!win.equals("")){
+                    if(!win.equals(""))
                         endGame(win);
+                    else {
+                        AI_take_turn(player);
+                        win = isWinner();
+                        if (!win.equals(""))
+                            endGame(win);
                     }
                 }
             }
@@ -239,15 +427,18 @@ public class MainActivity extends AppCompatActivity {
                     if (player.equals("X")) {
                         toplB.setTextColor(0xFFFF0000);
                         toplB.setBackgroundColor(0x20FF0000);
-                        AI_take_turn(player);
                     } else {
                         toplB.setTextColor(0xFF0000FF);
                         toplB.setBackgroundColor(0x200000FF);
-                        AI_take_turn(player);
                     }
                     String win = isWinner();
-                    if(!win.equals("")){
+                    if(!win.equals(""))
                         endGame(win);
+                    else {
+                        AI_take_turn(player);
+                        win = isWinner();
+                        if (!win.equals(""))
+                            endGame(win);
                     }
                 }
             }
@@ -262,15 +453,18 @@ public class MainActivity extends AppCompatActivity {
                     if (player.equals("X")) {
                         toprB.setTextColor(0xFFFF0000);
                         toprB.setBackgroundColor(0x20FF0000);
-                        AI_take_turn(player);
                     } else {
                         toprB.setTextColor(0xFF0000FF);
                         toprB.setBackgroundColor(0x200000FF);
-                        AI_take_turn(player);
                     }
                     String win = isWinner();
-                    if(!win.equals("")){
+                    if(!win.equals(""))
                         endGame(win);
+                    else {
+                        AI_take_turn(player);
+                        win = isWinner();
+                        if (!win.equals(""))
+                            endGame(win);
                     }
                 }
             }
@@ -285,15 +479,18 @@ public class MainActivity extends AppCompatActivity {
                     if (player.equals("X")) {
                         botlB.setTextColor(0xFFFF0000);
                         botlB.setBackgroundColor(0x20FF0000);
-                        AI_take_turn(player);
                     } else {
                         botlB.setTextColor(0xFF0000FF);
                         botlB.setBackgroundColor(0x200000FF);
-                        AI_take_turn(player);
                     }
                     String win = isWinner();
-                    if(!win.equals("")){
+                    if(!win.equals(""))
                         endGame(win);
+                    else {
+                        AI_take_turn(player);
+                        win = isWinner();
+                        if (!win.equals(""))
+                            endGame(win);
                     }
                 }
             }
@@ -308,15 +505,18 @@ public class MainActivity extends AppCompatActivity {
                     if (player.equals("X")) {
                         botrB.setTextColor(0xFFFF0000);
                         botrB.setBackgroundColor(0x20FF0000);
-                        AI_take_turn(player);
                     } else {
                         botrB.setTextColor(0xFF0000FF);
                         botrB.setBackgroundColor(0x200000FF);
-                        AI_take_turn(player);
                     }
                     String win = isWinner();
-                    if(!win.equals("")){
+                    if(!win.equals(""))
                         endGame(win);
+                    else {
+                        AI_take_turn(player);
+                        win = isWinner();
+                        if (!win.equals(""))
+                            endGame(win);
                     }
                 }
             }
