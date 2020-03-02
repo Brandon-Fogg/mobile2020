@@ -86,10 +86,9 @@ public class MainActivity extends AppCompatActivity {
         if(topRow.equals("XXX")||midRow.equals("XXX")||botRow.equals("XXX")||lVert.equals("XXX")||topVert.equals("XXX")||midVert.equals("XXX")||diag1.equals("XXX")||diag2.equals("XXX")){
             return "X Wins!";
         }
-        if(topRow.length()+midRow.length()+botRow.length()==9){
-            return "Tie Game!";
-        }
-        return "";
+        if(state.contains("."))
+            return "";
+        return "Tie Game!";
     }
 
     public String isWinner(){
@@ -139,18 +138,15 @@ public class MainActivity extends AppCompatActivity {
 
     public int max(String state) {
         String win = isWinner_string(state);
-        Log.i("button", "max" + state + state.length());
         if(win.equals("X Wins!"))
             return 2;
         else if(win.equals("Tie Game!"))
             return 1;
         else if(win.equals("O Wins!"))
             return 0;
-        Log.i("button", "here2");
         int max=0;
         for(int i=0;i<9;i++) {
             if(state.substring(i,i+1).equals(".")) {
-                Log.i("button", ""+i);
                 int t_max;
                 if(i==0)
                     t_max = min("X"+state.substring(1));
@@ -164,12 +160,10 @@ public class MainActivity extends AppCompatActivity {
                     max = 1;
             }
         }
-        Log.i("button", "here3");
         return max;
     }
 
     public int min(String state) {
-        Log.i("button", "min" + state + state.length());
         String win = isWinner_string(state);
         if(win.equals("X Wins!"))
             return 2;
@@ -178,7 +172,6 @@ public class MainActivity extends AppCompatActivity {
         else if(win.equals("O Wins!"))
             return 0;
         int min=2;
-        Log.i("button", "heree");
         for(int i=0;i<9;i++) {
             if(state.substring(i,i+1).equals(".")) {
                 int t_min;
@@ -200,13 +193,11 @@ public class MainActivity extends AppCompatActivity {
     public void AI_take_turn(String other_player) {
         String state = getState();
         Button[] buttons = {toplB,topB,toprB,lB,midB,rB,botlB,botB,botrB};
-        Log.i("button", state + state.length());
         if(other_player.equals("X")) {
             int min = 2;
             int idx = -1;
             for(int i=0;i<9;i++) {
                 if(state.substring(i,i+1).equals(".")) {
-                    Log.i("button", "" + i);
                     int t_min;
                     if(i==0)
                         t_min = max("O"+state.substring(1));
@@ -224,11 +215,9 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
-            Log.i("button", "Here2");
             buttons[idx].setTextColor(0xFF0000FF);
             buttons[idx].setBackgroundColor(0x200000FF);
             buttons[idx].setText("O");
-            Log.i("button", "Here3");
         }
         else {
             int max = 0;
