@@ -1,14 +1,22 @@
 package com.foggbrandon.tictactoe_quizapp;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
+
 import android.os.Bundle;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class MainActivity extends AppCompatActivity {
 
     TextView text;
@@ -27,8 +35,17 @@ public class MainActivity extends AppCompatActivity {
     Button botlB;
     Button botrB;
     Button resetB;
+    Button history;
+    TextView history_text;
+    Button reset_history;
     String player;
+    String player_mode;
 
+    SharedPreferences sharedPrefs;
+    SharedPreferences.Editor editor;
+
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+    LocalDateTime now;
 
     public String getState() {
         String to_ret = "";
@@ -101,13 +118,20 @@ public class MainActivity extends AppCompatActivity {
         String topVert = state[2]+state[5]+state[8];
         String diag1 = state[0]+state[4]+state[8];
         String diag2 = state[2]+state[4]+state[6];
+        now = LocalDateTime.now();
         if(topRow.equals("OOO")||midRow.equals("OOO")||botRow.equals("OOO")||lVert.equals("OOO")||topVert.equals("OOO")||midVert.equals("OOO")||diag1.equals("OOO")||diag2.equals("OOO")){
+            editor.putString("history", sharedPrefs.getString("history", "") + "O won in " + player_mode + ": " + dtf.format(now) + "\n");
+            editor.apply();
             return "O Wins!";
         }
         if(topRow.equals("XXX")||midRow.equals("XXX")||botRow.equals("XXX")||lVert.equals("XXX")||topVert.equals("XXX")||midVert.equals("XXX")||diag1.equals("XXX")||diag2.equals("XXX")){
+            editor.putString("history", sharedPrefs.getString("history", "") + "X won in " + player_mode + ": " + dtf.format(now) + "\n");
+            editor.apply();
             return "X Wins!";
         }
         if(topRow.length()+midRow.length()+botRow.length()==9){
+            editor.putString("history", sharedPrefs.getString("history", "") + "Tie game in " + player_mode + ": " + dtf.format(now) + "\n");
+            editor.apply();
             return "Tie Game!";
         }
         return "";
@@ -250,6 +274,7 @@ public class MainActivity extends AppCompatActivity {
     public void startSinglePlayerGame() {
         setContentView(R.layout.single_player_screen);
 
+        player_mode = "single player mode";
         player = "";
         text = findViewById(R.id.text);
         backB = findViewById(R.id.backB);
@@ -615,6 +640,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void startMultiPlayerGame() {
         setContentView(R.layout.multi_player_screen);
+
+        player_mode = "multi player mode";
         player = "X";
         text = findViewById(R.id.text);
         backB = findViewById(R.id.backB);
@@ -930,10 +957,37 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void startScreen() {
+    public void showHistory() {
+        setContentView(R.layout.history_screen);
+        history_text = findViewById(R.id.history_text);
+        reset_history = findViewById(R.id.reset_history);
+        backB = findViewById(R.id.backB);
+        history_text.setText(sharedPrefs.getString("history", ""));
+
+        reset_history.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Log.i("button", "Pressed reset history button");
+                editor.putString("history", "");
+                editor.apply();
+                history_text.setText(sharedPrefs.getString("history", ""));
+            }
+        });
+
+        backB.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Log.i("button", "Pressed back button");
+                startScreen();
+            }
+        });
+    }
+
+        public void startScreen() {
         setContentView(R.layout.start_screen);
         singlePlayer = findViewById(R.id.singlePlayer);
         multiPlayer = findViewById(R.id.multiPlayer);
+        history = findViewById(R.id.history);
 
         singlePlayer.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -950,11 +1004,21 @@ public class MainActivity extends AppCompatActivity {
                 startMultiPlayerGame();
             }
         });
+
+        history.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Log.i("button", "Play history button pressed");
+                showHistory();
+            }
+        });
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPrefs = getSharedPreferences("Game_History", Context.MODE_PRIVATE);
+        editor = sharedPrefs.edit();
         startScreen();
     }
 }

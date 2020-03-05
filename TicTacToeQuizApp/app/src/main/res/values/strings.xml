@@ -7,4 +7,6 @@
     <string name="back">BACK</string>
     <string name="choose_x">Play as X</string>
     <string name="choose_o">Play as O</string>
+    <string name="play_history">Play History</string>
+    <string name="reset_history">Reset History</string>
 </resources>
