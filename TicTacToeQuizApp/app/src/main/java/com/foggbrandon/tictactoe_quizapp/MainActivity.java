@@ -64,9 +64,10 @@ public class MainActivity extends AppCompatActivity {
             lB.setText(state.getL());
             midB.setText(state.getM());
             rB.setText(state.getR());
-            botB.setText(state.getBl());
-            botlB.setText(state.getB());
+            botlB.setText(state.getBl());
+            botB.setText(state.getB());
             botrB.setText(state.getBr());
+            player = state.getP();
         }
         if(toplB.getText().equals("X")) {
             toplB.setTextColor(0xFFFF0000);
@@ -189,9 +190,9 @@ public class MainActivity extends AppCompatActivity {
             to_ret += ".";
         else
             to_ret += botrB.getText().toString();
-        BoardState temp = new BoardState(to_ret);
+        BoardState temp = new BoardState(to_ret, player);
         String to_save = gson.toJson(temp);
-        editor.putString("state", to_save);
+        editor.putString(player_mode, to_save);
         editor.apply();
         return to_ret;
     }
@@ -257,7 +258,7 @@ public class MainActivity extends AppCompatActivity {
         else{
             text.setTextColor(0xFF000000);
         }
-        editor.putString("state", "");
+        editor.putString(player_mode, "");
         editor.apply();
         toplB.setClickable(false);
         topB.setClickable(false);
@@ -326,6 +327,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void AI_take_turn(String other_player) {
         String state = getState();
+        Log.i("button", state);
         Button[] buttons = {toplB,topB,toprB,lB,midB,rB,botlB,botB,botrB};
         if(other_player.equals("X")) {
             int min = 2;
@@ -379,13 +381,12 @@ public class MainActivity extends AppCompatActivity {
             buttons[idx].setBackgroundColor(0x20FF0000);
             buttons[idx].setText("X");
         }
+        state = getState();
     }
 
     public void startSinglePlayerGame() {
         setContentView(R.layout.single_player_screen);
 
-        player_mode = "single player mode";
-        player = "";
         text = findViewById(R.id.text);
         backB = findViewById(R.id.backB);
         chooseX = findViewById((R.id.chooseX));
@@ -410,6 +411,83 @@ public class MainActivity extends AppCompatActivity {
         toplB.setBackgroundColor(0x10909090);
         botrB.setBackgroundColor(0x10909090);
         botlB.setBackgroundColor(0x10909090);
+
+        player_mode = "single player mode";
+
+        BoardState temp = gson.fromJson(sharedPrefs.getString(player_mode,""), category);
+        setBoard(temp);
+
+        if(temp == null) {
+            player = "";
+            toplB.setClickable(false);
+            topB.setClickable(false);
+            toprB.setClickable(false);
+            lB.setClickable(false);
+            midB.setClickable(false);
+            rB.setClickable(false);
+            botrB.setClickable(false);
+            botB.setClickable(false);
+            botlB.setClickable(false);
+        }
+        else {
+            chooseO.setVisibility(View.INVISIBLE);
+            chooseX.setVisibility(View.INVISIBLE);
+            chooseO.setClickable(false);
+            chooseX.setClickable(false);
+
+            toplB.setClickable(true);
+            topB.setClickable(true);
+            toprB.setClickable(true);
+            lB.setClickable(true);
+            midB.setClickable(true);
+            rB.setClickable(true);
+            botrB.setClickable(true);
+            botB.setClickable(true);
+            botlB.setClickable(true);
+        }
+
+        chooseO.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Log.i("button", "Player chose O");
+                player = "O";
+                chooseO.setVisibility(View.INVISIBLE);
+                chooseX.setVisibility(View.INVISIBLE);
+                chooseO.setClickable(false);
+                chooseX.setClickable(false);
+                toplB.setClickable(true);
+                topB.setClickable(true);
+                toprB.setClickable(true);
+                lB.setClickable(true);
+                midB.setClickable(true);
+                rB.setClickable(true);
+                botrB.setClickable(true);
+                botB.setClickable(true);
+                botlB.setClickable(true);
+                AI_take_turn(player);
+            }
+        });
+
+        chooseX.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Log.i("button", "Player chose X");
+                player = "X";
+                chooseO.setVisibility(View.INVISIBLE);
+                chooseX.setVisibility(View.INVISIBLE);
+                chooseO.setClickable(false);
+                chooseX.setClickable(false);
+                toplB.setClickable(true);
+                topB.setClickable(true);
+                toprB.setClickable(true);
+                lB.setClickable(true);
+                midB.setClickable(true);
+                rB.setClickable(true);
+                botrB.setClickable(true);
+                botB.setClickable(true);
+                botlB.setClickable(true);
+            }
+        });
 
         midB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -663,49 +741,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        chooseO.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Log.i("button", "Player chose O");
-                player = "O";
-                chooseO.setVisibility(View.INVISIBLE);
-                chooseX.setVisibility(View.INVISIBLE);
-                chooseO.setClickable(false);
-                chooseX.setClickable(false);
-                toplB.setClickable(true);
-                topB.setClickable(true);
-                toprB.setClickable(true);
-                lB.setClickable(true);
-                midB.setClickable(true);
-                rB.setClickable(true);
-                botrB.setClickable(true);
-                botB.setClickable(true);
-                botlB.setClickable(true);
-                AI_take_turn(player);
-            }
-        });
-
-        chooseX.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Log.i("button", "Player chose X");
-                player = "X";
-                chooseO.setVisibility(View.INVISIBLE);
-                chooseX.setVisibility(View.INVISIBLE);
-                chooseO.setClickable(false);
-                chooseX.setClickable(false);
-                toplB.setClickable(true);
-                topB.setClickable(true);
-                toprB.setClickable(true);
-                lB.setClickable(true);
-                midB.setClickable(true);
-                rB.setClickable(true);
-                botrB.setClickable(true);
-                botB.setClickable(true);
-                botlB.setClickable(true);
-            }
-        });
-
         resetB.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -743,27 +778,18 @@ public class MainActivity extends AppCompatActivity {
                 chooseO.setClickable(true);
                 chooseX.setClickable(true);
                 text.setText("");
-                editor.putString("state", "");
+                editor.putString(player_mode, "");
                 editor.apply();
             }
         });
-
-        toplB.setClickable(false);
-        topB.setClickable(false);
-        toprB.setClickable(false);
-        lB.setClickable(false);
-        midB.setClickable(false);
-        rB.setClickable(false);
-        botrB.setClickable(false);
-        botB.setClickable(false);
-        botlB.setClickable(false);
     }
 
     public void startMultiPlayerGame() {
         setContentView(R.layout.multi_player_screen);
 
         player_mode = "multi player mode";
-        player = "X";
+        player = "";
+
         text = findViewById(R.id.text);
         backB = findViewById(R.id.backB);
         midB = findViewById(R.id.midB);
@@ -787,8 +813,17 @@ public class MainActivity extends AppCompatActivity {
         botrB.setBackgroundColor(0x10909090);
         botlB.setBackgroundColor(0x10909090);
 
-        BoardState temp = gson.fromJson(sharedPrefs.getString("state",""), category);
+        BoardState temp = gson.fromJson(sharedPrefs.getString(player_mode,""), category);
         setBoard(temp);
+
+        if(temp == null)
+            player = "X";
+
+        text.setText(player + "'s Turn");
+        if(player.equals("X"))
+            text.setTextColor(0xFFFF0000);
+        else
+            text.setTextColor(0xFF0000FF);
 
         midB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1078,7 +1113,7 @@ public class MainActivity extends AppCompatActivity {
                 botrB.setClickable(true);
                 botB.setClickable(true);
                 botlB.setClickable(true);
-                editor.putString("state", "");
+                editor.putString(player_mode, "");
                 editor.apply();
             }
         });

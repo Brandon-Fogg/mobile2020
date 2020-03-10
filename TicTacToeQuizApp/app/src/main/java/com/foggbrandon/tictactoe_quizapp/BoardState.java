@@ -19,7 +19,9 @@ public class BoardState{
     private String b;
     @Expose
     private String br;
-    BoardState(String name){
+    @Expose
+    private String p;
+    BoardState(String name, String player){
         tl = "" + name.charAt(0);
         t = "" + name.charAt(1);
         tr = "" + name.charAt(2);
@@ -29,6 +31,7 @@ public class BoardState{
         bl = "" + name.charAt(6);
         b = "" + name.charAt(7);
         br = "" + name.charAt(8);
+        p = player;
         if(tl.equals("."))
             tl = "";
         if(t.equals("."))
@@ -119,5 +122,13 @@ public class BoardState{
 
     public void setBr(String br) {
         this.br = br;
+    }
+
+    public String getP() {
+        return p;
+    }
+
+    public void setP(String p) {
+        this.p = p;
     }
 }
