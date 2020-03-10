@@ -11,10 +11,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.lang.reflect.Type;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 
 import android.os.Bundle;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class MainActivity extends AppCompatActivity {
@@ -46,6 +51,105 @@ public class MainActivity extends AppCompatActivity {
 
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
     LocalDateTime now;
+
+    Gson gson;
+    Type category;
+
+
+    public void setBoard(BoardState state){
+        if(state != null){
+            toplB.setText(state.getTl());
+            topB.setText(state.getT());
+            toprB.setText(state.getTr());
+            lB.setText(state.getL());
+            midB.setText(state.getM());
+            rB.setText(state.getR());
+            botB.setText(state.getBl());
+            botlB.setText(state.getB());
+            botrB.setText(state.getBr());
+        }
+        if(toplB.getText().equals("X")) {
+            toplB.setTextColor(0xFFFF0000);
+            toplB.setBackgroundColor(0x20FF0000);
+        }
+        else if(toplB.getText().equals("O")) {
+            toplB.setTextColor(0xFF0000FF);
+            toplB.setBackgroundColor(0x200000FF);
+        }
+
+        if(topB.getText().equals("X")) {
+            topB.setTextColor(0xFFFF0000);
+            topB.setBackgroundColor(0x20FF0000);
+        }
+        else if(topB.getText().equals("O")) {
+            topB.setTextColor(0xFF0000FF);
+            topB.setBackgroundColor(0x200000FF);
+        }
+
+        if(toprB.getText().equals("X")) {
+            toprB.setTextColor(0xFFFF0000);
+            toprB.setBackgroundColor(0x20FF0000);
+        }
+        else if(toprB.getText().equals("O")) {
+            toprB.setTextColor(0xFF0000FF);
+            toprB.setBackgroundColor(0x200000FF);
+        }
+
+        if(lB.getText().equals("X")) {
+            lB.setTextColor(0xFFFF0000);
+            lB.setBackgroundColor(0x20FF0000);
+        }
+        else if(lB.getText().equals("O")) {
+            lB.setTextColor(0xFF0000FF);
+            lB.setBackgroundColor(0x200000FF);
+        }
+
+        if(midB.getText().equals("X")) {
+            midB.setTextColor(0xFFFF0000);
+            midB.setBackgroundColor(0x20FF0000);
+        }
+        else if(midB.getText().equals("O")) {
+            midB.setTextColor(0xFF0000FF);
+            midB.setBackgroundColor(0x200000FF);
+        }
+
+        if(rB.getText().equals("X")) {
+            rB.setTextColor(0xFFFF0000);
+            rB.setBackgroundColor(0x20FF0000);
+        }
+        else if(rB.getText().equals("O")) {
+            rB.setTextColor(0xFF0000FF);
+            rB.setBackgroundColor(0x200000FF);
+        }
+
+        if(botlB.getText().equals("X")) {
+            botlB.setTextColor(0xFFFF0000);
+            botlB.setBackgroundColor(0x20FF0000);
+        }
+        else if(botlB.getText().equals("O")) {
+            botlB.setTextColor(0xFF0000FF);
+            botlB.setBackgroundColor(0x200000FF);
+        }
+
+        if(botB.getText().equals("X")) {
+            botB.setTextColor(0xFFFF0000);
+            botB.setBackgroundColor(0x20FF0000);
+        }
+        else if(botB.getText().equals("O")) {
+            botB.setTextColor(0xFF0000FF);
+            botB.setBackgroundColor(0x200000FF);
+        }
+
+        if(botrB.getText().equals("X")) {
+            botrB.setTextColor(0xFFFF0000);
+            botrB.setBackgroundColor(0x20FF0000);
+        }
+        else if(botrB.getText().equals("O")) {
+            botrB.setTextColor(0xFF0000FF);
+            botrB.setBackgroundColor(0x200000FF);
+        }
+    }
+
 
     public String getState() {
         String to_ret = "";
@@ -85,6 +189,10 @@ public class MainActivity extends AppCompatActivity {
             to_ret += ".";
         else
             to_ret += botrB.getText().toString();
+        BoardState temp = new BoardState(to_ret);
+        String to_save = gson.toJson(temp);
+        editor.putString("state", to_save);
+        editor.apply();
         return to_ret;
     }
 
@@ -149,6 +257,8 @@ public class MainActivity extends AppCompatActivity {
         else{
             text.setTextColor(0xFF000000);
         }
+        editor.putString("state", "");
+        editor.apply();
         toplB.setClickable(false);
         topB.setClickable(false);
         toprB.setClickable(false);
@@ -315,6 +425,7 @@ public class MainActivity extends AppCompatActivity {
                         midB.setBackgroundColor(0x200000FF);
                     }
                     String win = isWinner();
+                    String state = getState();
                     if(!win.equals(""))
                         endGame(win);
                     else {
@@ -341,6 +452,7 @@ public class MainActivity extends AppCompatActivity {
                         topB.setBackgroundColor(0x200000FF);
                     }
                     String win = isWinner();
+                    String state = getState();
                     if(!win.equals(""))
                         endGame(win);
                     else {
@@ -367,6 +479,7 @@ public class MainActivity extends AppCompatActivity {
                         botB.setBackgroundColor(0x200000FF);
                     }
                     String win = isWinner();
+                    String state = getState();
                     if(!win.equals(""))
                         endGame(win);
                     else {
@@ -393,6 +506,7 @@ public class MainActivity extends AppCompatActivity {
                         lB.setBackgroundColor(0x200000FF);
                     }
                     String win = isWinner();
+                    String state = getState();
                     if(!win.equals(""))
                         endGame(win);
                     else {
@@ -420,6 +534,7 @@ public class MainActivity extends AppCompatActivity {
                         rB.setBackgroundColor(0x200000FF);
                     }
                     String win = isWinner();
+                    String state = getState();
                     if(!win.equals(""))
                         endGame(win);
                     else {
@@ -446,6 +561,7 @@ public class MainActivity extends AppCompatActivity {
                         toplB.setBackgroundColor(0x200000FF);
                     }
                     String win = isWinner();
+                    String state = getState();
                     if(!win.equals(""))
                         endGame(win);
                     else {
@@ -472,6 +588,7 @@ public class MainActivity extends AppCompatActivity {
                         toprB.setBackgroundColor(0x200000FF);
                     }
                     String win = isWinner();
+                    String state = getState();
                     if(!win.equals(""))
                         endGame(win);
                     else {
@@ -498,6 +615,7 @@ public class MainActivity extends AppCompatActivity {
                         botlB.setBackgroundColor(0x200000FF);
                     }
                     String win = isWinner();
+                    String state = getState();
                     if(!win.equals(""))
                         endGame(win);
                     else {
@@ -524,6 +642,7 @@ public class MainActivity extends AppCompatActivity {
                         botrB.setBackgroundColor(0x200000FF);
                     }
                     String win = isWinner();
+                    String state = getState();
                     if(!win.equals(""))
                         endGame(win);
                     else {
@@ -624,6 +743,8 @@ public class MainActivity extends AppCompatActivity {
                 chooseO.setClickable(true);
                 chooseX.setClickable(true);
                 text.setText("");
+                editor.putString("state", "");
+                editor.apply();
             }
         });
 
@@ -666,6 +787,9 @@ public class MainActivity extends AppCompatActivity {
         botrB.setBackgroundColor(0x10909090);
         botlB.setBackgroundColor(0x10909090);
 
+        BoardState temp = gson.fromJson(sharedPrefs.getString("state",""), category);
+        setBoard(temp);
+
         midB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -686,6 +810,7 @@ public class MainActivity extends AppCompatActivity {
                         text.setTextColor(0xFFFF0000);
                     }
                     String win = isWinner();
+                    String state = getState();
                     if(!win.equals("")){
                         endGame(win);
                     }
@@ -714,6 +839,7 @@ public class MainActivity extends AppCompatActivity {
                         text.setTextColor(0xFFFF0000);
                     }
                     String win = isWinner();
+                    String state = getState();
                     if(!win.equals("")){
                         endGame(win);
                     }
@@ -741,6 +867,7 @@ public class MainActivity extends AppCompatActivity {
                         text.setTextColor(0xFFFF0000);
                     }
                     String win = isWinner();
+                    String state = getState();
                     if(!win.equals("")){
                         endGame(win);
                     }
@@ -768,6 +895,7 @@ public class MainActivity extends AppCompatActivity {
                         text.setTextColor(0xFFFF0000);
                     }
                     String win = isWinner();
+                    String state = getState();
                     if(!win.equals("")){
                         endGame(win);
                     }
@@ -796,6 +924,7 @@ public class MainActivity extends AppCompatActivity {
                         text.setTextColor(0xFFFF0000);
                     }
                     String win = isWinner();
+                    String state = getState();
                     if(!win.equals("")){
                         endGame(win);
                     }
@@ -823,6 +952,7 @@ public class MainActivity extends AppCompatActivity {
                         text.setTextColor(0xFFFF0000);
                     }
                     String win = isWinner();
+                    String state = getState();
                     if(!win.equals("")){
                         endGame(win);
                     }
@@ -850,6 +980,7 @@ public class MainActivity extends AppCompatActivity {
                         text.setTextColor(0xFFFF0000);
                     }
                     String win = isWinner();
+                    String state = getState();
                     if(!win.equals("")){
                         endGame(win);
                     }
@@ -877,6 +1008,7 @@ public class MainActivity extends AppCompatActivity {
                         text.setTextColor(0xFFFF0000);
                     }
                     String win = isWinner();
+                    String state = getState();
                     if(!win.equals("")){
                         endGame(win);
                     }
@@ -904,6 +1036,7 @@ public class MainActivity extends AppCompatActivity {
                         text.setTextColor(0xFFFF0000);
                     }
                     String win = isWinner();
+                    String state = getState();
                     if(!win.equals("")){
                         endGame(win);
                     }
@@ -945,6 +1078,8 @@ public class MainActivity extends AppCompatActivity {
                 botrB.setClickable(true);
                 botB.setClickable(true);
                 botlB.setClickable(true);
+                editor.putString("state", "");
+                editor.apply();
             }
         });
 
@@ -1017,6 +1152,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        category = new TypeToken<BoardState>(){}.getType();
         sharedPrefs = getSharedPreferences("Game_History", Context.MODE_PRIVATE);
         editor = sharedPrefs.edit();
         startScreen();
